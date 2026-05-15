@@ -3,7 +3,7 @@ from datetime import datetime
 
 # Lista de funções para o gerenciador de tarefas #
 # Menu Principal #
-def menu_tarefas():
+def menu_tarefas(lista):
     """
     Exibe o menu de opções para o usuário. Inicia um loop para receber uma entrada do usuário e executar a função correspondente.
 
@@ -26,25 +26,25 @@ def menu_tarefas():
 
     while True:
         opcao = int(input("\nEscolha uma opção: "))
-
+ 
         if opcao == 1:
-            listar_tarefas()
+            listar_tarefas(lista)
             print("\nAdicionar nova tarefa")
-            adicionar_tarefa()
+            adicionar_tarefa(lista)
         elif opcao == 2:
-            listar_tarefas()
+            listar_tarefas(lista)
         elif opcao == 3:
-            marcar_concluida()
+            marcar_concluida(lista)
         elif opcao == 4:
-            excluir_tarefa()
+            excluir_tarefa(lista)
         elif opcao == 5:
             print("\nSaindo do gerenciador de tarefas. Até logo!")
-            break
+            break  # encerra o loop e o programa
         else:
             print("\nOpção inválida. Por favor, escolha uma opção válida.")
 
 # Adicionar Tarefa #
-def adicionar_tarefa():
+def adicionar_tarefa(lista):
     """
     Adiciona uma nova tarefa à lista de tarefas. 
 
@@ -66,30 +66,30 @@ def adicionar_tarefa():
 
     tarefa = {
         "titulo": titulo,
-        "criacao": datetime.now().strftime("%d/%m/%Y"),
+        "criacao": datetime.now().strftime("%d/%m/%Y"), # Data atual formatada como dd/mm/aaaa
         "descricao": descricao,
         "status": status,
         "prazo": prazo,
         "urgencia": urgencia
 
     }
-    tarefas.append(tarefa)
+    lista.append(tarefa)
     print("\nTarefa adicionada com sucesso!")
 
 # Listar Tarefas #
-def listar_tarefas():
+def listar_tarefas(lista):
     """
     Caso não haja tarefas, informa que não há tarefas encontradas. Caso haja, exibe a lista de tarefas com seus títulos, descrições e prazos.
 
     Para melhor visualização, cada tarefa recebe um índice numérico, começando do 1, utilizamos um for para percorrer a lista de tarefas e exibir cada tarefa com seu índice, título, descrição e prazo.
     """
 
-    if not tarefas:
+    if not lista:
         print("Nenhuma tarefa encontrada.")
         return
 
     print("\nLista de Tarefas:")
-    for indice, tarefa in enumerate(tarefas, start=1):
+    for indice, tarefa in enumerate(lista, start=1):
         print(f"\n{indice}. {tarefa['titulo']}")
         print(f"   Descrição: {tarefa['descricao']}")
         print(f"   Criada em: {tarefa['criacao']}")
@@ -98,7 +98,7 @@ def listar_tarefas():
         print(f"   Urgência:  {tarefa['urgencia']}")
 
 # Marcar Tarefa como Concluída #
-def marcar_concluida():
+def marcar_concluida(lista):
     """
     Marca uma tarefa como concluída, removendo-a da lista.
 
@@ -106,40 +106,40 @@ def marcar_concluida():
     da tarefa. Repete a solicitação enquanto o número for inválido.
 
     """
-    if not tarefas:
+    if not lista:
         print("Nenhuma tarefa encontrada.")
         return
-    listar_tarefas()
+    listar_tarefas(lista)
     while True:
         concluida = int(input("\nDigite o número da tarefa a ser concluída: "))
-        if 1 <= concluida <= len(tarefas):
+        if 1 <= concluida <= len(lista):
             break
         else:
-            print(f"Digite um número entre 1 e {len(tarefas)}.")
-    tarefa_concluida = tarefas.pop(concluida - 1)
+            print(f"Digite um número entre 1 e {len(lista)}.")
+    tarefa_concluida = lista.pop(concluida - 1)
     print(f"\nTarefa '{tarefa_concluida['titulo']}' concluída e removida da lista!")
 
 # Excluir Tarefa #
-def excluir_tarefa():
+def excluir_tarefa(lista):
     """
     Exclui uma tarefa da lista.
 
     Exibe a lista de tarefas e solicita ao usuário o número da tarefa a ser excluída. Repete a solicitação enquanto o número for inválido.
     """
 
-    if not tarefas:
+    if not lista:
         print("Nenhuma tarefa encontrada.")
         return
-    listar_tarefas()
+    listar_tarefas(lista)
     while True:
         excluida = int(input("\nDigite o número da tarefa a ser excluída: "))
-        if 1 <= excluida <= len(tarefas):
-            break
+        if 1 <= excluida <= len(lista):
+            break # número válido, sai do loop
         else:
-            print(f"Digite um número entre 1 e {len(tarefas)}.")
-    tarefa_excluida = tarefas.pop(excluida - 1)
+            print(f"Digite um número entre 1 e {len(lista)}.")
+    tarefa_excluida = lista.pop(excluida - 1)
     print(f"\nTarefa '{tarefa_excluida['titulo']}' excluída da lista!")
 
 # Executar o programa #
 tarefas = []
-menu_tarefas()
+menu_tarefas(tarefas)
