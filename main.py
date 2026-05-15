@@ -1,3 +1,5 @@
+# Importando bibliotecas necessárias #
+from datetime import datetime
 
 # Lista de funções para o gerenciador de tarefas #
 # Menu Principal #
@@ -47,20 +49,29 @@ def adicionar_tarefa():
     Adiciona uma nova tarefa à lista de tarefas. 
 
     Titulo: O título da tarefa a ser adicionada.
+    Criação: A data de criação da tarefa, definida como a data atual.
     Descrição: A descrição da tarefa a ser adicionada.
+    Status: O status da tarefa a ser adicionada (Pendente/Concluída).
     Prazo: O prazo da tarefa a ser adicionada (dd/mm/aaaa).
+    Urgência: A urgência da tarefa a ser adicionada (Baixa/Média/Alta).
 
     Retorna um dict com as informações da tarefa adicionada.       
     """
 
     titulo = input("Digite o título da tarefa: ")
     descricao = input("Digite a descrição da tarefa: ")
+    status = input("Digite o status da tarefa (Pendente/Concluída): ")
     prazo = input("Digite o prazo da tarefa (dd/mm/aaaa): ")
+    urgencia = input("Digite a urgência da tarefa (Baixa/Média/Alta): ")
 
     tarefa = {
         "titulo": titulo,
+        "criacao": datetime.now().strftime("%d/%m/%Y"),
         "descricao": descricao,
+        "status": status,
         "prazo": prazo,
+        "urgencia": urgencia
+
     }
     tarefas.append(tarefa)
     print("\nTarefa adicionada com sucesso!")
@@ -78,8 +89,13 @@ def listar_tarefas():
         return
 
     print("\nLista de Tarefas:")
-    for index, tarefa in enumerate(tarefas, start=1):
-        print(f"{index}. {tarefa['titulo']} - {tarefa['descricao']} (Prazo: {tarefa['prazo']})")
+    for indice, tarefa in enumerate(tarefas, start=1):
+        print(f"\n{indice}. {tarefa['titulo']}")
+        print(f"   Descrição: {tarefa['descricao']}")
+        print(f"   Criada em: {tarefa['criacao']}")
+        print(f"   Status:    {tarefa['status']}")
+        print(f"   Prazo:     {tarefa['prazo']}")
+        print(f"   Urgência:  {tarefa['urgencia']}")
 
 # Marcar Tarefa como Concluída #
 def marcar_concluida():
